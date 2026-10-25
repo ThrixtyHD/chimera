@@ -21,7 +21,3 @@ Released under the [MIT License](LICENSE).
 ## Involvements
 
 - [SDL](https://www.libsdl.org/)
-
-## AI Disclosure
-
-No Generative AI was involved in the process of the code.
