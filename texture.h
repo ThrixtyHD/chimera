@@ -9,6 +9,10 @@ class Texture
 public:
 	SDL_State* state = nullptr;
 
+	Texture() 
+	{
+	};
+
 	SDL_FRect textureSrc;
 	SDL_FRect transform;
 
@@ -22,6 +26,7 @@ public:
 	float transform_W = 0.0f;
 	float transform_H = 0.0f;
 
+	std::string fallbackPath = "textures/missing_tex";
 
 	SDL_Texture* texture = nullptr;
 	void SetState(SDL_State& state_);

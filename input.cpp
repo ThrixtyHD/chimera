@@ -12,26 +12,26 @@ void Input::Create()
 void Input::ResetInputChecks()
 {
 	// copy prev to current. 
-	std::memcpy(previousFrameInput, currentFrameInput, sizeof(previousFrameInput));
+	std::memcpy(previousFrameKeyboardKeyInput, currentFrameKeyboardKeyInput, sizeof(previousFrameKeyboardKeyInput));
+	std::memcpy(previousFrameMouseButtonInput, currentFrameMouseButtonInput, sizeof(previousFrameMouseButtonInput));
 }
 
 bool Input::OnKeyDown(SDL_Scancode scancode) 
 { 
-	currentFrameInput[scancode] = true; 
+	currentFrameKeyboardKeyInput[scancode] = true;
 	return false;
-
 }
 
 bool Input::OnKeyUp(SDL_Scancode scancode) 
 { 
-	currentFrameInput[scancode] = false; 
+	currentFrameKeyboardKeyInput[scancode] = false;
 	return false;
 }
 
 bool Input::IsKeyPressed(SDL_Scancode scancode)
 {
 	bool isKeyPressed = false;
-	if (currentFrameInput[scancode])
+	if (currentFrameKeyboardKeyInput[scancode])
 	{
 		std::cout << "[Input::IsKeyPressed] Key: '" << scancode << "'.\n";
 		isKeyPressed = true;
@@ -42,7 +42,7 @@ bool Input::IsKeyPressed(SDL_Scancode scancode)
 bool Input::IsKeyJustPressed(SDL_Scancode scancode)
 {
 	bool isKeyJustPressed = false;
-	if (currentFrameInput[scancode] && !previousFrameInput[scancode])
+	if (currentFrameKeyboardKeyInput[scancode] && !previousFrameKeyboardKeyInput[scancode])
 	{
 		std::cout << "[Input::IsKeyJustPressed] Key: '" << scancode << "'.\n";
 		isKeyJustPressed = true;
@@ -53,7 +53,7 @@ bool Input::IsKeyJustPressed(SDL_Scancode scancode)
 bool Input::IsKeyJustReleased(SDL_Scancode scancode)
 {
 	bool isKeyJustReleased = false;
-	if (!currentFrameInput[scancode] && previousFrameInput[scancode])
+	if (!currentFrameKeyboardKeyInput[scancode] && previousFrameKeyboardKeyInput[scancode])
 	{
 		// std::cout << "[Input::IsKeyJustReleased] Key: '" << scancode << "'.\n";
 		isKeyJustReleased = true;
@@ -90,7 +90,7 @@ bool Input::IsActionPressed(std::string action)
 
 	for (int i = 0; i < actions.size(); i++)
 	{
-		if (actions[i].actionName == action && currentFrameInput[actions[i].actionKey])
+		if (actions[i].actionName == action && currentFrameKeyboardKeyInput[actions[i].actionKey])
 		{
 			std::cout << "[Input::IsActionPressed] actionName: '" << actions[i].actionName << "' is the same as action: '" << action << "' which is found inside of the actions vector.\n";
 			validAction = true;
@@ -116,7 +116,7 @@ bool Input::IsActionJustPressed(std::string action)
 	{
 		if (actions[i].actionName == action) 
 		{
-			if (currentFrameInput[actions[i].actionKey] && !previousFrameInput[actions[i].actionKey])
+			if (currentFrameKeyboardKeyInput[actions[i].actionKey] && !previousFrameKeyboardKeyInput[actions[i].actionKey])
 			{
 				std::cout << "[Input::IsActionJustPressed] actionName: '" << actions[i].actionName << "' is the same as action: '" << action << "' which is found inside of the actions vector.\n";
 				validAction = true;
@@ -143,7 +143,7 @@ bool Input::IsActionJustReleased(std::string action)
 	{
 		if (actions[i].actionName == action)
 		{
-			if (!currentFrameInput[actions[i].actionKey] && previousFrameInput[actions[i].actionKey])
+			if (!currentFrameKeyboardKeyInput[actions[i].actionKey] && previousFrameKeyboardKeyInput[actions[i].actionKey])
 			{
 				std::cout << "[Input::IsActionJustPressed] actionName: '" << actions[i].actionName << "' is the same as action: '" << action << "' which is found inside of the actions vector.\n";
 				validAction = true;
@@ -159,4 +159,49 @@ bool Input::IsActionJustReleased(std::string action)
 	{
 		return false;
 	}
+}
+
+// is mouse inside area
+// get the mouse cursor pos and compare. is the mouse cursor > pos.
+
+bool Input::IsMouseButtonPressed(Uint8 button)
+{
+	if (currentFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+	if (currentFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Input::IsMouseButtonJustPressed(Uint8 button)
+{
+	if (currentFrameMouseButtonInput[button] && !previousFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+	if (currentFrameMouseButtonInput[button] && !previousFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Input::IsMouseButtonJustReleased(Uint8 button)
+{
+	if (!currentFrameMouseButtonInput[button] && previousFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+	if (!currentFrameMouseButtonInput[button] && previousFrameMouseButtonInput[button])
+	{
+		return true;
+	}
+
+	return false;
 }

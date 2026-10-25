@@ -13,9 +13,16 @@ struct Action
 class Input
 {
 public:
+	// keyboard key
+	bool currentFrameKeyboardKeyInput[SDL_SCANCODE_COUNT] = {};
+	bool previousFrameKeyboardKeyInput[SDL_SCANCODE_COUNT] = {};
 
-	bool currentFrameInput[SDL_SCANCODE_COUNT] = {};
-	bool previousFrameInput[SDL_SCANCODE_COUNT] = {};
+	static constexpr int MOUSE_BUTTON_COUNT = 6;
+
+	// mouse button
+	bool currentFrameMouseButtonInput[MOUSE_BUTTON_COUNT] = {};
+	bool previousFrameMouseButtonInput[MOUSE_BUTTON_COUNT] = {};
+
 
 	std::string currentTargetActionName = "";
 
@@ -41,4 +48,9 @@ public:
 	bool IsActionPressed(std::string action);
 	bool IsActionJustPressed(std::string action);
 	bool IsActionJustReleased(std::string action);
+
+	bool IsMouseButtonPressed(Uint8 button);
+	bool IsMouseButtonJustPressed(Uint8 button);
+	bool IsMouseButtonJustReleased(Uint8 button);
+
 };

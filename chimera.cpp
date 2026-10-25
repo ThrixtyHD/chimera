@@ -11,10 +11,12 @@
 #include "boot.h"
 #include "debug_console.h"
 #include "camera.h"
-#include "scene.h"
-#include "node.h"
 #include "engine.h"
+#include "button.h"
+
+
 #include "chimera.h"
+
 
 int Chimera::Run(Game& game)
 {
@@ -60,6 +62,9 @@ int Chimera::Run(Game& game)
         SDL_GetWindowSize(state.window, &state.currentWindowWidth, &state.currentWindowHeight);
         now = SDL_GetPerformanceCounter();
         delta = (now - before) / (double)SDL_GetPerformanceFrequency();
+
+        // give state the delta.
+        state.delta = delta;
         before = now;
 
         SDL_Event event{ 0 };
@@ -68,13 +73,18 @@ int Chimera::Run(Game& game)
         {
             switch (event.type)
             {
+                case SDL_EVENT_MOUSE_BUTTON_DOWN:
                 case SDL_EVENT_MOUSE_BUTTON_UP:
                 {
-
+                    if (event.button.button < input.MOUSE_BUTTON_COUNT)
+                    {
+                        input.currentFrameMouseButtonInput[event.button.button] = event.button.down;
+                    }
                 }
                 case SDL_EVENT_MOUSE_MOTION: 
                 {
-                    //std::cout << "Mouse Motion Detected - "<< "x: " << event.motion.x<< ", y: " << event.motion.y << '\n';
+                    input.mousePositionX = event.motion.x;
+                    input.mousePositionY = event.motion.y;
                     break;
                 }
                 case SDL_EVENT_QUIT:
@@ -153,6 +163,11 @@ int Chimera::Run(Game& game)
         if (input.IsActionJustReleased("debug_key"))
         {
             console.ToggleConsole();
+        }
+
+        if (input.IsMouseButtonJustPressed(SDL_BUTTON_LEFT))
+        {
+            //console.ToggleConsole();
         }
 
         game.Update(delta);

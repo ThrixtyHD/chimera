@@ -27,6 +27,7 @@ void Texture::LoadTexture(std::string filepath)
         texture = IMG_LoadTexture(state->renderer, texturePath.c_str());
         if (!texture)
         {
+            texture = IMG_LoadTexture(state->renderer, fallbackPath.c_str());
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "texture null reference", nullptr);
         }
         std::cout << "[Texture::LoadTexture] Texture set successfully\n";

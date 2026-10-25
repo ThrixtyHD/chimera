@@ -9,7 +9,6 @@
 #include <fstream>
 #include "label.h"
 #include "boot.h"
-#include "scene.h"
 
 class DebugConsole
 {

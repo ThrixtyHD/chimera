@@ -18,6 +18,8 @@ public:
     // the total amount of frames passed in the application.
     Uint32 frames = 0;
 
+    double delta = 0;
+
 
     int currentWindowWidth = width;
     int currentWindowHeight = height;
