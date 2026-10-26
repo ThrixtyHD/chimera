@@ -12,12 +12,6 @@ I'm building chimera as a passion project. The engine's fundamentals are inspire
 
 ---
 
-## License
-
-Released under the [MIT License](LICENSE).
-
----
-
 ## Involvements
 
 - [SDL](https://www.libsdl.org/)
